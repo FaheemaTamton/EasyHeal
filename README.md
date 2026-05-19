@@ -267,7 +267,8 @@ The project focuses on:
 
 **Faheema Tamton**
 
-AI & ML Engineer  
+AI & ML Engineer
+🔗 Portfolio
 Focused on AI-powered healthcare and intelligent systems.
 
 
