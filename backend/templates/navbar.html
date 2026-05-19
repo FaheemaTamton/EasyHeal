@@ -1,0 +1,214 @@
+<!-- ================== EASYHEAL NAVBAR ================== -->
+<style>
+/* Force override Bootstrap */
+nav.easyheal-navbar {
+  background-color: rgb(74, 112, 169) !important;
+  height: 64px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+nav.easyheal-navbar .navbar-brand {
+  color: #ffffff !important;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+nav.easyheal-navbar .nav-link {
+  color: #ffffff !important;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+nav.easyheal-navbar .nav-link:hover {
+  background-color: rgba(255,255,255,0.12);
+  color: #EAF2FF !important;
+}
+
+nav.easyheal-navbar .logout-link {
+  opacity: 0.85;
+}
+
+nav.easyheal-navbar .logout-link:hover {
+  opacity: 1;
+}
+
+#alarmOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.alarm-content {
+  background: #1F2A44;
+  padding: 40px;
+  border-radius: 16px;
+  width: 400px;
+}
+
+.alarm-buttons {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+#snoozeBtn {
+  background: orange;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+#takenBtn {
+  background: #4CAF50;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+
+
+</style>
+
+<nav class="navbar easyheal-navbar">
+  <div class="container-fluid px-4">
+
+    <a class="navbar-brand" href="{% url 'home' %}">
+      EasyHeal
+    </a>
+
+    <ul class="navbar-nav flex-row gap-3 align-items-center ms-auto">
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'home' %}">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'my_account' %}">My Account</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link logout-link"
+           href="{% url 'logout' %}"
+           onclick="return confirm('Are you sure you want to log out?');">
+          Logout
+        </a>
+      </li>
+
+    </ul>
+
+  </div>
+</nav>
+
+<!-- ===============================
+     FULLSCREEN ALARM OVERLAY
+================================ -->
+<div id="alarmOverlay" style="display:none;">
+
+  <div class="alarm-content">
+    <h2>🔔 Medicine Time</h2>
+
+    <p><strong>Patient:</strong> <span id="alarmPatient"></span></p>
+    <p><strong>Medicine:</strong> <span id="alarmMedicine"></span></p>
+    <p><strong>Dosage:</strong> <span id="alarmDosage"></span></p>
+
+    <div class="alarm-buttons">
+      <button id="snoozeBtn">Snooze 5 min</button>
+      <button id="takenBtn">Mark as Taken</button>
+    </div>
+  </div>
+
+</div>
+
+<audio id="alarmSound" loop>
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg">
+</audio>
+
+<script>
+let currentAlarmId = null;
+
+function showAlarmModal(id, patient, medicine, dosage) {
+
+  currentAlarmId = id;
+
+  document.getElementById("alarmPatient").innerText = patient;
+  document.getElementById("alarmMedicine").innerText = medicine;
+  document.getElementById("alarmDosage").innerText = dosage;
+
+  document.getElementById("alarmOverlay").style.display = "flex";
+  const sound = document.getElementById("alarmSound");
+sound.play().catch(() => {
+  console.log("Autoplay blocked until user interaction.");
+});
+
+  
+}
+
+function hideAlarm() {
+  document.getElementById("alarmOverlay").style.display = "none";
+  document.getElementById("alarmSound").pause();
+  document.getElementById("alarmSound").currentTime = 0;
+}
+
+function checkAlarm() {
+
+  fetch("/check-alarm/")
+    .then(res => res.json())
+    .then(data => {
+
+      if (data.active) {
+        showAlarmModal(
+          data.alarm_id,
+          data.patient_name,
+          data.medicine_name,
+          data.dosage
+        );
+      }
+
+    });
+
+}
+
+setInterval(checkAlarm, 30000);
+checkAlarm();
+
+/* ===============================
+   BUTTON ACTIONS
+================================ */
+
+document.getElementById("takenBtn").addEventListener("click", function() {
+
+  fetch(`/mark-taken/${currentAlarmId}/`, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": "{{ csrf_token }}"
+    }
+  }).then(() => {
+    hideAlarm();
+  });
+
+});
+
+document.getElementById("snoozeBtn").addEventListener("click", function() {
+
+  fetch(`/snooze-alarm/${currentAlarmId}/`, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": "{{ csrf_token }}"
+    }
+  }).then(() => {
+    hideAlarm();
+  });
+
+});
+</script>
+
