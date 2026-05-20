@@ -173,83 +173,6 @@ Automatically creates alarms based on:
 
 ---
 
-#  Installation
-
-## 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/FaheemaTamton/EasyHeal.git
-```
-
----
-
-## 2️⃣ Navigate to Project
-
-```bash
-cd EasyHeal
-```
-
----
-
-## 3️⃣ Create Virtual Environment
-
-```bash
-python -m venv venv
-```
-
----
-
-## 4️⃣ Activate Virtual Environment
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-### Mac/Linux
-
-```bash
-source venv/bin/activate
-```
-
----
-
-## 5️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 6️⃣ Run Migrations
-
-```bash
-python manage.py migrate
-```
-
----
-
-## 7️⃣ Start Development Server
-
-```bash
-python manage.py runserver
-```
-
----
-
-#  Future Improvements
-
-- Drug interaction analysis
-- Voice-based medicine reminders
-- Cloud database integration
-- Mobile application
-- Advanced prescription analytics
-- Multi-language prescription support
-- AI dosage validation
-
----
 
 #  Project Goals
 
@@ -268,8 +191,10 @@ The project focuses on:
 **Faheema Tamton**
 
 AI & ML Engineer
-🔗 Portfolio
+
 Focused on AI-powered healthcare and intelligent systems.
+
+🔗 Portfolio
 
 
 ---
