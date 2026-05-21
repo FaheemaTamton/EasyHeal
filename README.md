@@ -192,7 +192,6 @@ The project focuses on:
 
 AI & ML Engineer
 
-Focused on AI-powered healthcare and intelligent systems.
 
 🔗 Portfolio
 
