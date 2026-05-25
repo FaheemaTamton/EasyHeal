@@ -166,10 +166,7 @@ Automatically creates alarms based on:
 
 #  Authentication Features
 
-- User registration
-- Login/logout system
-- Persistent sessions
-- User profile management
+
 
 ---
 
