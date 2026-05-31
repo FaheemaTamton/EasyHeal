@@ -7,4 +7,6 @@ image_path = os.path.join(BASE_DIR, "test_crop.jpg")
 
 result = extract_medicine_details(image_path)
 
+print("===== RAW MODEL OUTPUT =====")
+print(result)
 
