@@ -10,6 +10,4 @@ raw_output = """
 }
 """
 
-result = parse_vlm_response(raw_output)
 
-print(result)
