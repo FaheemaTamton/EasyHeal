@@ -9,6 +9,7 @@ raw_output = """
   "duration_days": null
 }
 """
+result = parse_vlm_response(raw_output)
 
 
 print(result)
