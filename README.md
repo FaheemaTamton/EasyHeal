@@ -1,20 +1,3 @@
-#  EasyHeal – Multimodal AI Prescription Understanding System
-
-EasyHeal is an AI-powered healthcare web application designed to digitize and understand handwritten medical prescriptions using Vision Language Models (VLMs).
-
-The system extracts medicine-related information directly from prescription images and converts them into structured, manageable healthcare data. It also generates medicine reminder alarms for patients based on dosage and intake schedules.
-
-Built using Django, HTML, CSS, JavaScript, and locally hosted AI models through LM Studio.
-
----
-
-#  Features
-
-##  Patient Management
-- Add and manage patient profiles
-- Store patient medical details
-- Upload patient photos
-- Guardian information support
 
 
 ##  Prescription Understanding
