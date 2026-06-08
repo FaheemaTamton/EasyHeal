@@ -10,10 +10,6 @@ Built using Django, HTML, CSS, JavaScript, and locally hosted AI models through 
 
 #  Features
 
-##  Patient Management
-- Add and manage patient profiles
-- Store patient medical details
-- Upload patient photos
 - Guardian information support
 
 
