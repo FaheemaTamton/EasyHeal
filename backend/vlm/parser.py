@@ -1,25 +1,4 @@
-import json
 
-def parse_vlm_response(raw: str):
-
-    empty = {
-        "medicine_name": [],
-        "dosage": [],
-        "food_instruction": [],
-        "intake": [],
-        "duration_days": [],
-    }
-
-    if not raw:
-        return empty
-
-    raw = raw.strip()
-    raw = raw.replace("```json", "").replace("```", "").strip()
-
-    try:
-        data = json.loads(raw)
-    except Exception:
-        return empty
 
     # If list of objects → merge safely
     if isinstance(data, list):
