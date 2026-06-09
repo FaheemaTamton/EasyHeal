@@ -1,18 +1,3 @@
-SYSTEM_PROMPT = """
-You are a medical prescription extraction system.
-
-You MUST return ONLY valid JSON.
-Do NOT include explanations.
-Do NOT include markdown.
-Do NOT include comments.
-Do NOT include extra text.
-
-The JSON MUST have EXACTLY these keys:
-- medicine_name
-- dosage
-- food_instruction
-- intake
-- duration_days
 
 Rules:
 - Each value MUST be an array.
