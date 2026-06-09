@@ -1,4 +1,17 @@
+import base64
+from io import BytesIO
+from PIL import Image
 
+from vlm.client import client
+from vlm.prompt import SYSTEM_PROMPT
+from vlm.preprocess import preprocess_prescription
+
+
+def image_to_base64(image_array):
+    image = Image.fromarray(image_array)
+    buffer = BytesIO()
+    image.save(buffer, format="JPEG")
+    return base64.b64encode(buffer.getvalue()).decode("utf-8")
 
 
 def extract_medicine_details(image_path):
