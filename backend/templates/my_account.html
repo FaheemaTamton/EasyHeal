@@ -190,39 +190,4 @@
     <div class="profile-details-box">
        <div class="profile-details-box">
 
-  <p class="profile-detail-line">
-    <strong>Email:</strong> {{ user.email }}
-  </p>
-
-  <p class="profile-detail-line">
-    <strong>Phone:</strong> {{ profile.mobile|default:"N/A" }}
-  </p>
-
-  <p class="profile-detail-line">
-    <strong>Role:</strong> {{ profile.role|default:"N/A" }}
-  </p>
-
-  <p class="profile-detail-line">
-    <strong>Organization:</strong>
-    {{ profile.organization|default:"N/A" }}
-  </p>
-
-</div>
-
-      
-    <div class="mt-4">
-      <a href="{% url 'my_account' %}?edit=true"
-         class="btn theme-btn edit-profile-btn w-100 py-2">
-        Edit Profile
-      </a>
-    </div>
-
-  {% endif %}
-
-</form>
-
   
-</div>
-
-</body>
-</html>
