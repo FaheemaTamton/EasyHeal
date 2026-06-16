@@ -225,7 +225,52 @@ document.getElementById("patientPhoto").addEventListener("change", function (e) 
 
 <!--patient cards -->
 
+<div class="container mt-4">
+  <div class="row g-4">
 
+    {% for patient in patients %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+
+      <div class="card patient-card h-100">
+
+        {% if patient.photo %}
+        <img src="{{ patient.photo.url }}"
+             class="card-img-top"
+             alt="Patient Photo">
+        {% else %}
+        <img src="https://via.placeholder.com/286x180"
+             class="card-img-top"
+             alt="No Photo">
+        {% endif %}
+
+        <div class="card-body text-center">
+
+          <h5 class="card-title mb-1">
+            {{ patient.name }}
+          </h5>
+
+          <p class="card-text small text-muted mb-2">
+            Age: {{ patient.age }} <br>
+            Gender: {{ patient.gender }}
+          </p>
+
+          <a href="{% url 'patient_details' patient.id %}"
+             class="btn btn-primary btn-sm">
+            View Details
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+    {% empty %}
+    <div class="col-12 text-center text-muted">
+      <p>No patients added yet.</p>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
 
 <style>
 .patient-card {
