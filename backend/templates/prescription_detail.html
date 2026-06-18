@@ -84,6 +84,84 @@ body {
 </style>
 </head>
 
+<body>
+
+  {% include "navbar.html" %}
+
+<div class="wrapper">
+
+  <!-- ================= IMAGE ================= -->
+  <div class="prescription-image">
+    <h4 class="section-title">PRESCRIPTION IMAGE</h4>
+    {% if prescription.image %}
+      <img src="{{ prescription.image.url }}">
+    {% else %}
+      <p>No image available</p>
+    {% endif %}
+  </div>
+
+
+  <!-- ================= MEDICINES ================= -->
+  <h4 class="section-title">MEDICINE DETAILS</h4>
+
+  <div class="medicine-table">
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-name">Medicine</div>
+      {% for med in medicines %}
+        <div class="medicine-row">{{ med.name }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-dosage">Dosage</div>
+      {% for med in medicines %}
+        <div class="medicine-row">{{ med.dosage }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-food">Food</div>
+      {% for med in medicines %}
+        <div class="medicine-row">{{ med.food_instruction|default:"—" }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-days">Days</div>
+      {% for med in medicines %}
+        <div class="medicine-row">{{ med.duration_days }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-time">Intake</div>
+      {% for med in medicines %}
+        <div class="medicine-row">{{ med.intake_pattern }}</div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+
+  <!-- ================= ALARMS ================= -->
+  <h4 class="section-title mt-5">ALARM SCHEDULE</h4>
+
+  <div class="medicine-table">
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-name">Medicine</div>
+      {% for alarm in prescription.alarms.all %}
+        <div class="medicine-row">{{ alarm.medicine.name }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-days">Date</div>
+      {% for alarm in prescription.alarms.all %}
+        <div class="medicine-row">{{ alarm.alarm_date }}</div>
+      {% endfor %}
+    </div>
 
     <div class="medicine-col">
       <div class="medicine-col-header col-time">Time</div>
