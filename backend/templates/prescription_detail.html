@@ -86,6 +86,19 @@ body {
 
 <body>
 
+  {% include "navbar.html" %}
+
+<div class="wrapper">
+
+  <!-- ================= IMAGE ================= -->
+  <div class="prescription-image">
+    <h4 class="section-title">PRESCRIPTION IMAGE</h4>
+    {% if prescription.image %}
+      <img src="{{ prescription.image.url }}">
+    {% else %}
+      <p>No image available</p>
+    {% endif %}
+  </div>
 
 
   <!-- ================= MEDICINES ================= -->
