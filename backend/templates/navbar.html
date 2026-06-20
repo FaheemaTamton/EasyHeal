@@ -133,22 +133,6 @@ nav.easyheal-navbar .logout-link:hover {
   <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg">
 </audio>
 
-<script>
-let currentAlarmId = null;
-
-function showAlarmModal(id, patient, medicine, dosage) {
-
-  currentAlarmId = id;
-
-  document.getElementById("alarmPatient").innerText = patient;
-  document.getElementById("alarmMedicine").innerText = medicine;
-  document.getElementById("alarmDosage").innerText = dosage;
-
-  document.getElementById("alarmOverlay").style.display = "flex";
-  const sound = document.getElementById("alarmSound");
-sound.play().catch(() => {
-  console.log("Autoplay blocked until user interaction.");
-});
 
   
 }
