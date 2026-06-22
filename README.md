@@ -8,7 +8,6 @@ Built using Django, HTML, CSS, JavaScript, and locally hosted AI models through 
 
 ---
 
-#  Features
 
 
 
