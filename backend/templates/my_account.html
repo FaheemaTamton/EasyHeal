@@ -155,17 +155,7 @@
              value="{{ user.email }}" required>
     </div>
 
-    <div class="info-row">
-      <label class="info-label">Phone Number</label>
-      <input type="text" name="mobile" class="form-control"
-             value="{{ profile.mobile }}">
-    </div>
-
-    <div class="info-row">
-      <label class="info-label">Role</label>
-      <input type="text" name="role" class="form-control"
-             value="{{ profile.role }}">
-    </div>
+    
 
     <div class="info-row">
       <label class="info-label">Health Center / Organization</label>
@@ -209,3 +199,20 @@
 
 </div>
 
+      
+    <div class="mt-4">
+      <a href="{% url 'my_account' %}?edit=true"
+         class="btn theme-btn edit-profile-btn w-100 py-2">
+        Edit Profile
+      </a>
+    </div>
+
+  {% endif %}
+
+</form>
+
+  
+</div>
+
+</body>
+</html>
