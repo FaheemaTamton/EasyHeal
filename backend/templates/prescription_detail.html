@@ -127,7 +127,19 @@ body {
       {% endfor %}
     </div>
 
-  
+    <div class="medicine-col">
+      <div class="medicine-col-header col-days">Days</div>
+      {% for med in medicines %}
+        <div class="medicine-row">{{ med.duration_days }}</div>
+      {% endfor %}
+    </div>
+
+    <div class="medicine-col">
+      <div class="medicine-col-header col-time">Intake</div>
+      {% for med in medicines %}
+        <div class="medicine-row">{{ med.intake_pattern }}</div>
+      {% endfor %}
+    </div>
 
   </div>
 
