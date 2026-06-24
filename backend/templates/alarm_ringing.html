@@ -144,6 +144,13 @@ body {
     <div class="time-badge">10:00 AM (Day 3 of 5)</div>
   </div>
 
+  <div class="alarm-actions">
+    <button class="btn-taken" id="takenBtn">Taken</button>
+    <button class="btn-snooze" id="snoozeBtn">Snooze 10 min</button>
+    <button class="btn-skip" id="skipBtn">Skip</button>
+  </div>
+
+</div>
 
 <script>
 const alarmSound = new Audio("{% static 'sounds/alarm.mp3' %}");
