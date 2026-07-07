@@ -166,7 +166,22 @@ function stopAlarm() {
 /* TAKEN */
 document.getElementById("takenBtn").onclick = () => {
   stopAlarm();
+  alert("Medicine marked as taken.");
+};
 
+/* SNOOZE */
+document.getElementById("snoozeBtn").onclick = () => {
+  stopAlarm();
+  alert("Alarm snoozed for 10 minutes.");
+};
+
+/* SKIP */
+document.getElementById("skipBtn").onclick = () => {
+  stopAlarm();
+  if (confirm("Are you sure you want to skip this dose?")) {
+    alert("Dose marked as skipped.");
+  }
+};
 </script>
 
 
