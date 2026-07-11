@@ -152,22 +152,6 @@ body {
 
 </div>
 
-<script>
-const alarmSound = new Audio("{% static 'sounds/alarm.mp3' %}");
-alarmSound.loop = true;
-alarmSound.play();
-
-/* STOP SOUND */
-function stopAlarm() {
-  alarmSound.pause();
-  alarmSound.currentTime = 0;
-}
-
-/* TAKEN */
-document.getElementById("takenBtn").onclick = () => {
-  stopAlarm();
-  alert("Medicine marked as taken.");
-};
 
 /* SNOOZE */
 document.getElementById("snoozeBtn").onclick = () => {
