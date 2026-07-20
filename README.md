@@ -11,8 +11,15 @@ Built using Django, HTML, CSS, JavaScript, and locally hosted AI models through 
 
 
 
-
-
+##  Prescription Understanding
+- Upload handwritten prescription images
+- AI-powered medicine extraction
+- Detects:
+  - Medicine names
+  - Dosage
+  - Intake frequency
+  - Food instructions
+  - Duration
 
 ##  Multimodal AI Integration
 - Uses Vision Language Models (VLMs)
