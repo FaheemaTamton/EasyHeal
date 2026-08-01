@@ -132,7 +132,25 @@ body {
 
 <body>
 
+<div class="alarm-container">
 
+  <div class="alarm-pulse">🔔</div>
+  <div class="alarm-header">Medicine Reminder</div>
+  <div class="patient-name">Patient: John Doe</div>
+
+  <div class="medicine-card">
+    <div class="medicine-name">Paracetamol</div>
+    <div class="medicine-info">500 mg • After Food</div>
+    <div class="time-badge">10:00 AM (Day 3 of 5)</div>
+  </div>
+
+  <div class="alarm-actions">
+    <button class="btn-taken" id="takenBtn">Taken</button>
+    <button class="btn-snooze" id="snoozeBtn">Snooze 10 min</button>
+    <button class="btn-skip" id="skipBtn">Skip</button>
+  </div>
+
+</div>
 
 <script>
 const alarmSound = new Audio("{% static 'sounds/alarm.mp3' %}");
