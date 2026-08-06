@@ -151,7 +151,7 @@ body {
 
     <div class="medicine-col">
       <div class="medicine-col-header col-name">Medicine</div>
-      {% for alarm in prescription.alarms.all%}
+      {% for alarm in prescription.alarms.all %}
         <div class="medicine-row">{{ alarm.medicine.name }}</div>
       {% endfor %}
     </div>
