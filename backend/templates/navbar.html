@@ -129,4 +129,86 @@ nav.easyheal-navbar .logout-link:hover {
 
 </div>
 
+<audio id="alarmSound" loop>
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg">
+</audio>
+
+<script>
+let currentAlarmId = null;
+
+function showAlarmModal(id, patient, medicine, dosage) {
+
+  currentAlarmId = id;
+
+  document.getElementById("alarmPatient").innerText = patient;
+  document.getElementById("alarmMedicine").innerText = medicine;
+  document.getElementById("alarmDosage").innerText = dosage;
+
+  document.getElementById("alarmOverlay").style.display = "flex";
+  const sound = document.getElementById("alarmSound");
+sound.play().catch(() => {
+  console.log("Autoplay blocked until user interaction.");
+});
+
+  
+}
+
+function hideAlarm() {
+  document.getElementById("alarmOverlay").style.display = "none";
+  document.getElementById("alarmSound").pause();
+  document.getElementById("alarmSound").currentTime = 0;
+}
+
+function checkAlarm() {
+
+  fetch("/check-alarm/")
+    .then(res => res.json())
+    .then(data => {
+
+      if (data.active) {
+        showAlarmModal(
+          data.alarm_id,
+          data.patient_name,
+          data.medicine_name,
+          data.dosage
+        );
+      }
+
+    });
+
+}
+
+setInterval(checkAlarm, 30000);
+checkAlarm();
+
+/* ===============================
+   BUTTON ACTIONS
+================================ */
+
+document.getElementById("takenBtn").addEventListener("click", function() {
+
+  fetch(`/mark-taken/${currentAlarmId}/`, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": "{{ csrf_token }}"
+    }
+  }).then(() => {
+    hideAlarm();
+  });
+
+});
+
+document.getElementById("snoozeBtn").addEventListener("click", function() {
+
+  fetch(`/snooze-alarm/${currentAlarmId}/`, {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": "{{ csrf_token }}"
+    }
+  }).then(() => {
+    hideAlarm();
+  });
+
+});
+</script>
 
