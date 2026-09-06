@@ -1,0 +1,746 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Details</title>
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Cropper -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --theme-color: #8FABD4;
+  --theme-hover: #4A70A9;
+}
+
+/* ===== Background ===== */
+body {
+   min-height: 100vh;
+  background-color: rgb(239, 236, 227);
+}
+
+/* ===== Card ===== */
+.patient-form-card {
+  max-width: 520px;
+  margin: auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.patient-form-header {
+  padding: 32px;
+  background: var(--theme-color);
+  color: #fff;
+  text-align: center;
+}
+
+.patient-form-body {
+  padding: 24px;
+}
+
+/* ===== Avatar ===== */
+.avatar-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.25);
+  border: 2px solid rgba(255,255,255,.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 12px;
+  overflow: hidden;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== Details Box ===== */
+.patient-details-box {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.patient-detail-line {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.details-subheading {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* ===== Buttons ===== */
+.patient-primary-btn {
+  background: #4A70A9;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+}
+
+.patient-primary-btn:hover {
+  background: #8FABD4;
+  color: #fff;
+}
+
+/* ===== Prescription UI ===== */
+.add-prescription {
+  border: 2px dashed var(--theme-color);
+  border-radius: 12px;
+  padding: 22px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--theme-color);
+  transition: .25s;
+}
+
+.add-prescription:hover {
+  background: rgba(143,171,212,.12);
+}
+
+.plus-icon {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.prescription-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* ===== Crop Modal ===== */
+#cropModal .modal-dialog {
+  max-width: 720px;
+}
+
+#cropImage {
+  max-height: 45vh;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* ===== Prescription Grid ===== */
+.prescription-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* ===== Card Base ===== */
+.prescription-card {
+  height: 200px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  transition: 0.25s ease;
+  overflow: hidden;
+}
+
+.prescription-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.1);
+}
+
+/* ===== Add Card ===== */
+.add-card {
+  border: 2px dashed #8FABD4;
+  color: #8FABD4;
+}
+
+.add-card:hover {
+  background: rgba(143,171,212,0.12);
+}
+
+.add-card .plus-icon {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.add-card p {
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ===== Image Card ===== */
+.prescription-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plus-icon {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ================= PRESCRIPTIONS ================= */
+
+.prescription-section {
+  margin-top: 56px;
+}
+
+/* Grid uses Bootstrap row */
+.prescription-card {
+  border-radius: 16px;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  height: 100%;
+}
+
+.prescription-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.14);
+}
+
+/* Media (same feel as patient cards) */
+.prescription-card-media {
+  height: 160px;
+  background: #f1f4f9;
+  margin: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.prescription-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Body */
+.prescription-card-body {
+  text-align: center;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.prescription-card-title {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.prescription-card-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+/* Button alignment */
+.prescription-card-body .btn {
+  margin-top: auto;
+}
+
+/* ================= ADD PRESCRIPTION CARD ================= */
+
+.add-prescription-card {
+  border-radius: 16px;
+  border: 2px dashed #8FABD4;
+  background: #ffffff;
+  height: 100%;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.add-prescription-card:hover {
+  background: rgba(143, 171, 212, 0.08);
+}
+
+.add-prescription-inner {
+  height: 100%;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #4A70A9;
+}
+
+.add-prescription-inner .plus-icon {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+/*=======CARD BUTTON========*/
+.theme-btn {
+  background-color: #4A70A9;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.theme-btn:hover {
+  background-color: #8FABD4;
+  color: #ffffff;
+}
+
+/* delete button */
+.dropdown-menu .delete-prescription {
+  background-color: #dc3545; /* full red */
+  color: #000000 !important; /* black text */
+  font-weight: 600;
+}
+
+.dropdown-menu .delete-prescription:hover {
+  background-color: #bb2d3b;
+  color: #000000 !important;
+}
+
+.menu-dots {
+  font-size: 20px;
+  font-weight: 900;
+  color: #1F2A44; /* darker navy */
+}
+
+.card-menu-btn {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.card-menu-btn:hover {
+  background: #f3f4f6;
+}
+
+
+
+
+/* ================= CROP MODAL ================= */
+
+#cropModal .modal-dialog {
+  max-width: 720px;
+}
+
+#cropImage {
+  max-width: 100%;
+  max-height: 45vh;
+  border-radius: 8px;
+}
+
+
+</style>
+</head>
+
+{% include "navbar.html" %}
+
+<body>
+
+<div class="container py-4">
+
+  <!-- ================= PATIENT DETAILS ================= -->
+  <div class="patient-form-card mb-4">
+
+  <div class="patient-form-header">
+    <div class="avatar-circle">
+      {% if patient.photo %}
+        <img src="{{ patient.photo.url }}">
+      {% else %}
+        👤
+      {% endif %}
+    </div>
+    <h4 class="fw-bold mb-0">{{ patient.name }}</h4>
+  </div>
+
+  <div class="patient-form-body">
+
+    {% if edit_mode %}
+    <!-- ========== EDIT MODE ========== -->
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="fw-semibold">Name</label>
+        <input type="text" name="name" class="form-control" value="{{ patient.name }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-semibold">Age</label>
+        <input type="number" name="age" class="form-control" value="{{ patient.age }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-semibold">Gender</label>
+        <select name="gender" class="form-select">
+          <option {% if patient.gender == "Male" %}selected{% endif %}>Male</option>
+          <option {% if patient.gender == "Female" %}selected{% endif %}>Female</option>
+          <option {% if patient.gender == "Other" %}selected{% endif %}>Other</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-semibold">Guardian Name</label>
+        <input type="text" name="guardian_name" class="form-control"
+               value="{{ patient.guardian_name }}">
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-semibold">Guardian Phone</label>
+        <input type="text" name="guardian_phone" class="form-control"
+               value="{{ patient.guardian_phone }}">
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-semibold">Health Issue</label>
+        <textarea name="health_issue" class="form-control" rows="3">{{ patient.health_issue }}</textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="fw-semibold">Patient Photo</label>
+        <input type="file" name="photo" class="form-control">
+      </div>
+
+      <div class="d-flex gap-3 mt-3">
+        <button type="submit" class="btn patient-primary-btn w-100">
+          Save Changes
+        </button>
+
+        <a href="{% url 'patient_details' patient.id %}"
+           class="btn btn-secondary w-100">
+          Cancel
+        </a>
+      </div>
+    </form>
+
+    {% else %}
+    <!-- ========== VIEW MODE ========== -->
+
+    <div class="patient-details-box">
+      <div class="details-subheading">Patient Information</div>
+
+      <div class="patient-detail-line"><strong>Age:</strong> {{ patient.age }}</div>
+      <div class="patient-detail-line"><strong>Gender:</strong> {{ patient.gender }}</div>
+      <div class="patient-detail-line"><strong>Guardian:</strong> {{ patient.guardian_name|default:"N/A" }}</div>
+      <div class="patient-detail-line"><strong>Guardian Phone:</strong> {{ patient.guardian_phone|default:"N/A" }}</div>
+      <div class="patient-detail-line"><strong>Health Issue:</strong> {{ patient.health_issue|default:"N/A" }}</div>
+    </div>
+
+    <a href="?edit=true" class="btn patient-primary-btn w-100 mt-3">
+      Edit Profile
+    </a>
+
+    {% endif %}
+
+  </div>
+</div>
+
+
+<!-- ================= PRESCRIPTIONS ================= -->
+<div class="container prescription-section">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">PRESCRIPTIONS</h4>
+  </div>
+
+ <div class="row g-4" id="prescriptionGrid">
+
+  <!-- ➕ ADD PRESCRIPTION -->
+  <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+    <div class="card add-prescription-card" id="addPrescriptionBox">
+      <div class="add-prescription-inner">
+        <div class="plus-icon">+</div>
+        <p class="mb-0 fw-semibold">Add Prescription</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📄 SAVED PRESCRIPTIONS -->
+  {% for prescription in prescriptions %}
+  <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+    <div class="card prescription-card h-100">
+
+       <!-- 🔴 3 DOT MENU -->
+      <div class="card-menu dropdown position-absolute top-0 end-0 m-2">
+
+      <button class="btn btn-sm card-menu-btn" data-bs-toggle="dropdown">
+        <span class="menu-dots">⋮</span>
+      </button>
+
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+          <a class="dropdown-item text-dark bg-danger delete-prescription"
+             href="#"
+             data-id="{{ prescription.id }}">
+            Delete
+          </a>
+        </li>
+      </ul>
+    </div>
+
+      <!-- Image -->
+      <div class="prescription-card-media">
+        {% if prescription.image %}
+          <img src="{{ prescription.image.url }}" alt="Prescription Image">
+        {% else %}
+          <div class="patient-avatar-circle">📄</div>
+        {% endif %}
+      </div>
+
+      <!-- Body -->
+      <div class="prescription-card-body">
+        <h6 class="prescription-card-title">
+          Prescription #{{ prescription.id }}
+        </h6>
+
+        <p class="prescription-card-text">
+          {{ prescription.created_at|date:"M d, Y" }}
+        </p>
+
+        <a href="{% url 'prescription_detail' prescription.id %}"
+           class="btn theme-btn btn-sm w-100">
+          View Details
+        </a>
+      </div>
+
+    </div>
+  </div>
+  {% endfor %}
+
+</div>
+
+<input type="file" id="prescriptionInput" accept="image/*" hidden>
+
+
+
+
+
+ 
+<!-- ================= CROP MODAL ================= -->
+<div class="modal fade" id="cropModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Crop Medicine Area</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <p class="text-muted small">
+          Crop tightly around medicine & dosage
+        </p>
+        <img id="cropImage">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn patient-primary-btn" id="scanPrescriptionBtn">
+          Scan Prescription
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<form id="scanForm"
+      action="{% url 'scan_prescription' %}"
+      method="POST"
+      enctype="multipart/form-data"
+      style="display:none;">
+
+  {% csrf_token %}
+
+  <input type="hidden" name="patient_id" value="{{ patient.id }}">
+  <input type="file" name="prescription" id="croppedImageInput">
+</form>
+
+
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const addBox = document.getElementById("addPrescriptionBox");
+  const fileInput = document.getElementById("prescriptionInput");
+  const cropImage = document.getElementById("cropImage");
+  const scanBtn = document.getElementById("scanPrescriptionBtn");
+  const grid = document.getElementById("prescriptionGrid");
+
+  const cropModalEl = document.getElementById("cropModal");
+  const cropModal = new bootstrap.Modal(cropModalEl);
+
+  let cropper = null;
+
+  /* ===============================
+     + CLICK → OPEN FILE PICKER
+  =============================== */
+  addBox.addEventListener("click", () => {
+    fileInput.click();
+  });
+
+  /* ===============================
+     FILE SELECTED → OPEN CROP
+  =============================== */
+  fileInput.addEventListener("change", () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      cropImage.src = reader.result;
+      cropModal.show();
+
+      cropModalEl.addEventListener(
+        "shown.bs.modal",
+        () => {
+          if (cropper) cropper.destroy();
+
+          cropper = new Cropper(cropImage, {
+            viewMode: 1,
+            autoCropArea: 0.65,
+            responsive: true,
+            movable: true,
+            zoomable: true
+          });
+        },
+        { once: true }
+      );
+    };
+
+    reader.readAsDataURL(file);
+  });
+  /* ===============================
+   SCAN → SEND TO BACKEND + UI
+=============================== */
+scanBtn.addEventListener("click", () => {
+  if (!cropper) return;
+
+  const canvas = cropper.getCroppedCanvas({
+    width: 800,
+    height: 800,
+    imageSmoothingQuality: "high"
+  });
+
+  canvas.toBlob(function (blob) {
+
+    /* ===== 1. SEND TO BACKEND (VLM) ===== */
+    const file = new File([blob], "prescription.jpg", {
+      type: "image/jpeg"
+    });
+
+    const input = document.getElementById("croppedImageInput");
+    const dt = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
+
+    document.getElementById("scanForm").submit();
+
+    /* ===== 2. (OPTIONAL) UI PREVIEW ===== */
+    const croppedImageURL = URL.createObjectURL(blob);
+    cropModal.hide();
+
+    const col = document.createElement("div");
+    col.className = "col-xl-3 col-lg-4 col-md-6 col-sm-12";
+
+    col.innerHTML = `
+      <div class="card prescription-card h-100">
+        <div class="prescription-card-media">
+          <img src="${croppedImageURL}">
+        </div>
+        <div class="prescription-card-body">
+          <h6 class="prescription-card-title">Prescription</h6>
+          <p class="prescription-card-text">Scanning…</p>
+        </div>
+      </div>
+    `;
+
+    grid.appendChild(col);
+
+    /* ===== 3. CLEANUP ===== */
+    fileInput.value = "";
+    cropper.destroy();
+    cropper = null;
+
+  }, "image/jpeg");
+});
+
+});
+
+
+// script for delete button 
+// ===============================
+// DELETE PRESCRIPTION
+// ===============================
+document.addEventListener("click", function(e) {
+
+  if (e.target.classList.contains("delete-prescription")) {
+
+    e.preventDefault();
+
+    const prescriptionId = e.target.dataset.id;
+
+    const confirmDelete = confirm(
+      "Are you sure you want to delete this prescription?\n\nThis will remove medicines and alarms permanently."
+    );
+
+    if (!confirmDelete) return;
+
+    fetch(`/delete-prescription/${prescriptionId}/`, {
+      method: "POST",
+      headers: {
+        "X-CSRFToken": "{{ csrf_token }}"
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        location.reload();
+      } else {
+        alert("Delete failed.");
+      }
+    });
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
