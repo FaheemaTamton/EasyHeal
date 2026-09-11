@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EasyHeal | Register</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-blue: #4A70A9;
+      --dark-blue: #1F2A44;
+      --light-blue: #EAF2FF;
+      --bg-light: #F8FAFF;
+      --border-light: #E0E7FF;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+
+      background:
+        linear-gradient(
+          rgba(248, 250, 255, 0.40),
+          rgba(248, 250, 255, 0.40)
+        ),
+        url("{% static 'core/register.avif' %}");
+
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(47, 128, 237, 0.08);
+      margin-top: 60px;
+      background-color: #ffffff;
+    }
+
+    .easyheal-logo-text {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary-blue);
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .easyheal-subtext {
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .form-control,
+    .form-select {
+      background-color: #ffffff;
+      padding: 14px 16px;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-primary {
+      background-color: var(--primary-blue);
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    .create-acc-btn {
+    background-color: #4A70A9;   /* swapped color */
+    color: #ffffff;
+     border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: 500;
+      width: 100%;
+}
+
+.create-acc-btn:hover {
+    background-color: #8FABD4;   /* hover color */
+    color: #ffffff;
+}
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+
+      <div class="card">
+        <div class="easyheal-logo-text">EasyHeal</div>
+        <div class="easyheal-subtext">
+          Caregiver / Health Center Registration
+        </div>
+
+        <div class="card-body px-4 pb-4">
+
+          <!-- 🔴 DJANGO FORM START -->
+          <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <!-- Personal Info -->
+            <input type="text" class="form-control"
+                   name="username"
+                   placeholder="User Name"
+                   required>
+
+            <input type="email" class="form-control"
+                   name="email"
+                   placeholder="Email Address"
+                   required>
+
+            <input type="tel" class="form-control"
+                   name="mobile"
+                   placeholder="Mobile Number"
+                   required>
+
+            <!-- Work Info -->
+            <select class="form-select" name="role" required>
+              <option value="">Select Role</option>
+              <option>Caregiver</option>
+              <option>Nurse</option>
+              <option>Health Center Staff</option>
+              <option>Admin</option>
+            </select>
+
+            <input type="text" class="form-control"
+                   name="organization"
+                   placeholder="Health Center / Organization Name"
+                   required>
+
+            <!-- Security -->
+            <input type="password" class="form-control"
+                   name="password"
+                   placeholder="Password"
+                   required>
+
+            <input type="password" class="form-control"
+                   name="confirm_password"
+                   placeholder="Confirm Password"
+                   required>
+
+            <button type="submit" class="btn create-acc-btn mt-2">
+              Create Account
+            </button>
+
+            <div class="text-center mt-3">
+              <a href="{% url 'login' %}">
+                Already have an account? Login
+              </a>
+            </div>
+
+          </form>
+          <!-- 🔴 DJANGO FORM END -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
